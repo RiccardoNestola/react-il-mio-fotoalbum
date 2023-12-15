@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
     return (
@@ -11,16 +12,14 @@ const Header = () => {
                         <a href="/" className="ml-3 text-xl">Foto Album</a>
                     </div>
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 flex flex-wrap items-center text-base justify-center">
-                        <a to='/' className="mr-5 hover:text-gray-900">Home</a>
-                        <a to='/chi-sono' className="mr-5 hover:text-gray-900">Chi Sono</a>
-                        <a to='/contatti' className="mr-5 hover:text-gray-900">Contatti</a>
+                        <NavLink to='/' className="mr-5 hover:text-gray-900">Home</NavLink>
                     </nav>
 
-                    {/* <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={onOpenModal}>Crea Post
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="mx-1 w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                    </button> */}
+                    <NavLink to='/login' className="mx-2 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
+                    </NavLink>
+
+                    <NavLink to='/registrati' className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Registrati
+                    </NavLink>
 
                 </div>
             </header>
