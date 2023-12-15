@@ -35,6 +35,8 @@ app.use('/api/admin/foto', authMiddleware, adminFotoRouter);
 app.use('/api/admin/categorie', authMiddleware, adminCategorieRouter);
 app.use('/api/admin/utenti', authMiddleware, adminUtentiRouter);
 
+// File statici
+app.use('/uploads', express.static('uploads'));
 
 // Gestione degli errori o rotte non trovate
 app.use((req, res, next) => {
