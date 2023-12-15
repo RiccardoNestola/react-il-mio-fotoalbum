@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 
 const adminFotoController = require('../../controllers/admin/adminFotoController');
+const authMiddleware = require('../../middleware/authMiddleware');
 
 // Configurazione di multer
 const storage = multer.diskStorage({
@@ -19,13 +20,13 @@ const upload = multer({ storage: storage });
 
 
 
-router.post('/carica', upload.single('immagine'), adminFotoController.aggiungiFoto);
+router.post('/carica', authMiddleware, upload.single('immagine'), adminFotoController.aggiungiFoto);
 
 
-router.put('/:id', adminFotoController.modificaFoto);
+router.put('/:id', authMiddleware, adminFotoController.modificaFoto);
 
 
-router.delete('/:id', adminFotoController.eliminaFoto);
+router.delete('/:id', authMiddleware, adminFotoController.eliminaFoto);
 
 
 module.exports = router;

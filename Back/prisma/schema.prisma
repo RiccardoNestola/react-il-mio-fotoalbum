@@ -18,6 +18,7 @@ model User {
   ruolo     Ruolo    @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  foto      Foto[]
 }
 
 enum Ruolo {
@@ -34,6 +35,8 @@ model Foto {
   categorie   Categoria[] @relation("FotoToCategoria")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id])
 }
 
 model Categoria {
