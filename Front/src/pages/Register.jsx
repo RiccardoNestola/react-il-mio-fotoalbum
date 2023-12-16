@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header/Header'
-import LoginForm from '../components/Forms/LoginForm'
+import Register from '../components/Forms/RegisterForm'
 import Footer from '../components/Footer/Footer'
 
 const Login = () => {
@@ -8,7 +8,7 @@ const Login = () => {
         <>
 
             <Header />
-            <LoginForm />
+            <Register />
             <Footer />
         </>
     )

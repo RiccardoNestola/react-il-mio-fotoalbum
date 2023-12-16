@@ -2,8 +2,6 @@ import axios from 'axios';
 
 export const baseUrl = 'http://localhost:3000/api/foto';
 
-
-
 export const getFoto = async () => {
     try {
         const response = await axios.get(baseUrl);

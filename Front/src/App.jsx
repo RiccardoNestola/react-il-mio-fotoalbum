@@ -2,20 +2,24 @@ import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
-import Registrati from './pages/Registrati';
+import Register from './pages/Register';
+import { AuthProvider } from './Context/authContext';
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
-        <Routes>
+        <AuthProvider>
+          <Routes>
 
-          <Route path="/" element={<Homepage />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/registrati" element={<Registrati />}></Route>
+            <Route path="/" element={<Homepage />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/registrati" element={<Register />}></Route>
 
-        </Routes>
+
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </>
   )
