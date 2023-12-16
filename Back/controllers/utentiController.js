@@ -48,8 +48,14 @@ const loginUtente = async (req, res) => {
             return res.status(401).json({ messaggio: "Email o password non corretti" });
         }
 
+        const utenteOggetto = {
+            nome: utente.nome,
+            email: utente.email
+
+        };
+
         const token = jwt.sign({ userId: utente.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        res.json({ token, utente: utenteOggetto });
     } catch (error) {
         res.status(500).json({ errore: error.message });
     }
