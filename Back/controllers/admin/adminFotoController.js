@@ -1,16 +1,22 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-async function listaFoto(req, res) {
+async function listaFotoPersonali(req, res) {
     try {
-        const foto = await prisma.foto.findMany({
-            include: {
-                categorie: true
+        console.log("User:", req.user.userId);
+        const idUtente = req.user.userId;
+        const mieFoto = await prisma.foto.findMany({
+            where: {
+                userId: idUtente
+
+
             }
-        })
-        res.json(foto);
-    } catch (error) {
-        res.status(500).json({ errore: error.message });
+        });
+
+        res.json(mieFoto);
+        console.log("Mie foto:", mieFoto);
+    } catch (errore) {
+        res.status(500).json({ messaggio: errore.message });
     }
 }
 
@@ -99,7 +105,7 @@ async function eliminaFoto(req, res) {
 }
 
 module.exports = {
-    listaFoto,
+    listaFotoPersonali,
     dettagliFoto,
     aggiungiFoto,
     modificaFoto,

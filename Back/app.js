@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+
 app.use(express.json());
 
-app.use(cors());
+
+
 
 // Importo i router
 
@@ -23,6 +25,7 @@ const adminUtentiRouter = require('./routes/admin/utenti');
 
 const authMiddleware = require('./middleware/authMiddleware');
 
+app.use(cors());
 
 // Router
 app.use('/api/foto', fotoRouter);
@@ -45,5 +48,7 @@ app.use((req, res, next) => {
 
 // Avvio del server
 app.listen(3000, () => {
+    console.log("JWT Secret:", process.env.JWT_SECRET);
+
     console.log('Server avviato su http://localhost:3000');
 });

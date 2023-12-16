@@ -18,8 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-
+router.get('/foto-personali', authMiddleware, adminFotoController.listaFotoPersonali);
 
 router.post('/carica', authMiddleware, upload.single('immagine'), adminFotoController.aggiungiFoto);
 

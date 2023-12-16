@@ -32,7 +32,9 @@ const registraUtente = async (req, res) => {
             }
         });
 
-        res.status(201).json({ utente: { id: nuovoUtente.id, email: nuovoUtente.email, nome: nuovoUtente.nome } });
+        const token = jwt.sign({ id: nuovoUtente.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(201).json({ utente: { id: nuovoUtente.id, email: nuovoUtente.email, nome: nuovoUtente.nome }, token });
     } catch (error) {
         res.status(500).json({ errore: error.message });
     }
