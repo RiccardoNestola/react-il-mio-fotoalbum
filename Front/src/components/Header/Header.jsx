@@ -35,6 +35,8 @@ const Header = () => {
                         <>
                             <p className="mx-2 inline-flex items-center py-1 px-3 font-bold focus:outline-none text-base mt-4 md:mt-0"> Ciao {user.utente.nome || "utente"}</p>
                             <button className="inline-flex items-center mx-2 bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={logout}>Logout</button>
+                            <NavLink to="/dashboard" className="inline-flex items-center mx-2 bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Dashboard</NavLink>
+
 
                         </>
                     )}
