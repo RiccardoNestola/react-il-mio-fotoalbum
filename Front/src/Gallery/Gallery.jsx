@@ -23,7 +23,7 @@ const Gallery = () => {
                     <p className="lg:pl-6 lg:w-2/3 mx-auto leading-relaxed text-base">Offriamo un'ampia galleria di immagini mozzafiato, consigli esperti e una comunità vibrante dove la passione per la fotografia incontra l'eccellenza professionale. Che tu sia un fotografo di ritratti, paesaggi, eventi o moda.</p>
                 </div>
                 <div className="flex flex-wrap -m-2">
-                    {foto.map((f, index) => (
+                    {foto.filter(f => f.visibile).map((f, index) => (
                         <div key={f.id} className={`p-2 w-1/2 md:w-1/3 lg:w-1/4 ${index % 2 === 0 ? 'translate-y-4' : 'translate-y-0'}`}>
                             <div className="relative overflow-hidden">
                                 <img alt={f.descrizione} className="w-full object-cover object-center h-64 block transform transition duration-500 hover:scale-110" src={`${serverUrl}${f.immagine}`} />
