@@ -29,18 +29,46 @@ const FotoList = () => {
     }, [user]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {foto.map((foto, index) => (
-                <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <img className="w-full" src={`${serverUrl}${foto.immagine}`} />
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">{foto.titolo}</div>
-                        <p className="text-gray-700 text-base">
-                            {foto.descrizione}
-                        </p>
-                    </div>
-                </div>
-            ))}
+
+
+        <div className="overflow-x-auto">
+            <table className="min-w-full divide-y">
+
+                <thead className="bg-gray-100">
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Foto</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Titolo</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descrizione</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Categoria</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Azioni</th>
+                    </tr>
+                </thead>
+
+                <tbody className=" divide-y divide-gray-300">
+
+                    {foto.map((foto, index) => (
+                        <tr key={index}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <img src={`${serverUrl}${foto.immagine}`} alt="Foto" className="h-10 w-10 rounded" />
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.titolo}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.descrizione}</td>
+
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                {foto.categorie.map(categoria => categoria.nome).join(", ")}
+                            </td>
+
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out mr-2">Visibilità</button>
+                                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out mr-2">Modifica</button>
+                                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out">Cancella</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
         </div>
     );
 };
