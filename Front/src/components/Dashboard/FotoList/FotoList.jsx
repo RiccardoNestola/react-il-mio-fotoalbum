@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../Context/authContext';
 import "./FotoList.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const FotoList = () => {
+    const navigate = useNavigate();
+
     const serverUrl = "http://localhost:3000/";
     const [foto, setFoto] = useState([]);
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newFotoData, setNewFotoData] = useState({
@@ -80,7 +84,13 @@ const FotoList = () => {
                 });
                 setFoto(response.data);
             } catch (error) {
-                console.error("Errore nel caricamento delle foto:", error);
+                if (error.response && error.response.status === 401) {
+                    console.error("Sessione scaduta. Effettua nuovamente il login.");
+                    logout();
+                    navigate('/login');
+                } else {
+                    console.error("Errore durante la richiesta:", error);
+                }
 
             }
         };
@@ -170,7 +180,14 @@ const FotoList = () => {
 
             setFoto(foto.map(f => f.id === fotoId ? { ...f, visibile: !f.visibile } : f));
         } catch (error) {
-            console.error("Errore durante la modifica della visibilità:", error);
+            if (error.response && error.response.status === 401) {
+                console.error("Sessione scaduta. Effettua nuovamente il login.");
+                logout();
+                navigate('/login');
+            } else {
+                console.error("Errore durante la modifica della visibilità:", error);
+            }
+
         }
     };
 
@@ -190,7 +207,14 @@ const FotoList = () => {
                 setFoto(foto.filter(f => f.id !== fotoId));
 
             } catch (error) {
-                console.error("Errore durante l'eliminazione della foto:", error);
+                if (error.response && error.response.status === 401) {
+                    console.error("Sessione scaduta. Effettua nuovamente il login.");
+                    logout();
+                    navigate('/login');
+                } else {
+                    console.error("Errore durante l'eliminazione della foto:", error);
+                }
+
             }
         }
 
