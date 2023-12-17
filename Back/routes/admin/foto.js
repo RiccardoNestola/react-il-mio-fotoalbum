@@ -20,10 +20,12 @@ const upload = multer({ storage: storage });
 
 router.get('/foto-personali', authMiddleware, adminFotoController.listaFotoPersonali);
 
+router.get('/foto-personali/:id', authMiddleware, adminFotoController.dettagliFoto);
+
 router.post('/carica', authMiddleware, upload.single('immagine'), adminFotoController.aggiungiFoto);
 
 
-router.put('/:id', authMiddleware, adminFotoController.modificaFoto);
+router.put('/modifica/:id', authMiddleware, adminFotoController.modificaFoto);
 
 
 router.delete('/:id', authMiddleware, adminFotoController.eliminaFoto);
