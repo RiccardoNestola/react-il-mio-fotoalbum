@@ -25,7 +25,8 @@ router.get('/foto-personali/:id', authMiddleware, adminFotoController.dettagliFo
 router.post('/carica', authMiddleware, upload.single('immagine'), adminFotoController.aggiungiFoto);
 
 
-router.put('/modifica/:id', authMiddleware, adminFotoController.modificaFoto);
+router.put('/modifica/:id', upload.single('immagine'), adminFotoController.modificaFoto);
+
 
 
 router.delete('/:id', authMiddleware, adminFotoController.eliminaFoto);

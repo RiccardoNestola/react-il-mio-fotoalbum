@@ -78,6 +78,23 @@ input:checked + .slider:before {
   background-color: #4cd964;
 }
 
+.btn-ios-carica {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  border: none;
+  outline: none;
+}
+
+.btn-carica {
+  background-color: #193471 !important;
+  color: white;
+}
+
 .btn-modifica:hover {
   background-color: #41c654;
 }
