@@ -8,6 +8,11 @@ async function listaFotoPersonali(req, res) {
         const mieFoto = await prisma.foto.findMany({
             where: {
                 userId: idUtente
+            },
+            include: {
+                categorie: true
+
+
 
 
             }
@@ -67,13 +72,25 @@ async function aggiungiFoto(req, res) {
             }
         });
 
-
-
-
+        const categorie = await prisma.categoria.findMany({
+            where: {
+                id: {
+                    in: categorieIds
+                }
+            },
+            select: {
+                id: true,
+                nome: true
+            }
+        });
 
         console.log("Categorie IDs:", categorieIds);
 
-        res.json({ messaggio: "Foto aggiunta con successo", nuovaFoto, categorie: categorieIds });
+        res.json({
+            messaggio: "Foto aggiunta con successo",
+            nuovaFoto,
+            categorie: categorie.map(categoria => categoria.nome)
+        });
     } catch (error) {
         res.status(500).json({ errore: error.message });
     }
