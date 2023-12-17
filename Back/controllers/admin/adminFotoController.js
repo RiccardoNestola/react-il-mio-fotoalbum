@@ -99,17 +99,30 @@ async function aggiungiFoto(req, res) {
 
 async function modificaFoto(req, res) {
     try {
+        console.log("Richiesta:", req.params.id);
+        console.log("Body:", req.body);
         const id = parseInt(req.params.id);
-        const { titolo, descrizione, immagine, visibile } = req.body;
+        let updates = req.body;
+
+
+        if ('visibile' in updates) {
+            updates = { ...updates, visibile: updates.visibile === 'true' || updates.visibile === true };
+        }
+
+
         const fotoAggiornata = await prisma.foto.update({
             where: { id },
-            data: { titolo, descrizione, immagine, visibile }
+            data: { ...updates }
         });
+
         res.json(fotoAggiornata);
+        console.log("Foto aggiornata:", fotoAggiornata);
     } catch (error) {
         res.status(500).json({ errore: error.message });
     }
 }
+
+
 
 async function eliminaFoto(req, res) {
     try {
