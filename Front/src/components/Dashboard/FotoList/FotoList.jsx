@@ -12,6 +12,20 @@ const FotoList = () => {
     const [foto, setFoto] = useState([]);
     const { user, logout } = useAuth();
 
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+    const [selectedDetailFoto, setSelectedDetailFoto] = useState(null);
+
+
+    const openDetailModal = (foto) => {
+        setSelectedDetailFoto(foto);
+        setIsDetailModalOpen(true);
+    };
+
+    const closeDetailModal = () => {
+        setIsDetailModalOpen(false);
+        setSelectedDetailFoto(null);
+    };
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newFotoData, setNewFotoData] = useState({
         titolo: '',
@@ -252,7 +266,7 @@ const FotoList = () => {
                     {foto.map((foto, index) => (
                         <tr key={index}>
                             <td className="px-6 py-4 whitespace-nowrap">
-                                <img src={`${serverUrl}${foto.immagine}`} alt="Foto" className="h-10 w-10 rounded" />
+                                <img onClick={() => openDetailModal(foto)} src={`${serverUrl}${foto.immagine}`} alt="Foto" className="h-10 w-10 rounded cursor-zoom-in" />
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.titolo}</td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.descrizione}</td>
@@ -369,6 +383,34 @@ const FotoList = () => {
                                         </button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* dettaglio foto */}
+            {isDetailModalOpen && selectedDetailFoto && (
+                <div className="fixed inset-0 z-50 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+                        <div className="bg-white rounded-lg shadow-2xl mx-4 md:w-1/2 animate-scale-up">
+                            <div className="p-5">
+                                <div className="text-right">
+                                    <button onClick={closeDetailModal} className="text-gray-500 hover:text-gray-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div className="text-center">
+                                    <img
+                                        src={`${serverUrl}${selectedDetailFoto.immagine}`}
+                                        alt="Dettaglio Foto"
+                                        className="max-w-full h-auto rounded"
+                                    />
+                                    <h3 className="text-lg font-bold">{selectedDetailFoto.titolo}</h3>
+                                    <p>{selectedDetailFoto.descrizione}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
