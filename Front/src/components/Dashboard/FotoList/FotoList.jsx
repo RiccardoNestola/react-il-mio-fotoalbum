@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../Context/authContext';
+import "./FotoList.css";
 
 const FotoList = () => {
     const serverUrl = "http://localhost:3000/";
@@ -27,6 +28,51 @@ const FotoList = () => {
         }
 
     }, [user]);
+
+
+    // visibilità
+    const toggleVisibility = async (fotoId, currentVisibility) => {
+        try {
+            await axios.put(`http://localhost:3000/api/admin/foto/modifica/${fotoId}`, {
+                visibile: !currentVisibility
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`,
+                }
+            });
+
+
+            setFoto(foto.map(f => f.id === fotoId ? { ...f, visibile: !f.visibile } : f));
+        } catch (error) {
+            console.error("Errore durante la modifica della visibilità:", error);
+        }
+    };
+
+
+
+
+    // elimina
+    const deleteFoto = async (fotoId) => {
+        if (window.confirm("Sei sicuro di voler eliminare questa foto?")) {
+            try {
+                await axios.delete(`http://localhost:3000/api/admin/foto/${fotoId}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    }
+                });
+
+                setFoto(foto.filter(f => f.id !== fotoId));
+                alert("Foto eliminata con successo");
+            } catch (error) {
+                console.error("Errore durante l'eliminazione della foto:", error);
+            }
+        }
+
+    };
+
+
+
 
     return (
 
@@ -59,9 +105,17 @@ const FotoList = () => {
                             </td>
 
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out mr-2">Visibilità</button>
-                                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out mr-2">Modifica</button>
-                                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition duration-300 ease-in-out">Cancella</button>
+                                <div className="btn-container">
+
+                                    <label className="switch">
+                                        <input type="checkbox" checked={foto.visibile} onChange={() => toggleVisibility(foto.id, foto.visibile)} />
+                                        <span className="slider round"></span>
+                                    </label>
+                                    <button className="btn-ios btn-modifica">
+                                        Modifica
+                                    </button>
+                                    <button onClick={() => deleteFoto(foto.id)} className="btn-ios btn-cancella">Cancella</button>
+                                </div>
                             </td>
                         </tr>
                     ))}
