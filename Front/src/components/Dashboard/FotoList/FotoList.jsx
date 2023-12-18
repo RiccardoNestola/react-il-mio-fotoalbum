@@ -269,7 +269,7 @@ const FotoList = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Titolo</th>
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descrizione</th>
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Categoria</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Azioni</th>
+                            <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Azioni</th>
                         </tr>
                     </thead>
 
@@ -292,7 +292,7 @@ const FotoList = () => {
                                 </td>
 
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div className="btn-container">
+                                    <div className="btn-container justify-center">
 
                                         <label className="switch">
                                             <input type="checkbox" checked={foto.visibile} onChange={() => toggleVisibility(foto.id, foto.visibile)} />
