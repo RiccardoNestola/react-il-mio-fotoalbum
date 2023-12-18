@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../Context/authContext';
 import "./FotoList.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import ContacsList from '../ContactsList/ContacsList';
 
 
 const FotoList = () => {
@@ -14,6 +15,12 @@ const FotoList = () => {
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
     const [selectedDetailFoto, setSelectedDetailFoto] = useState(null);
+
+    const [showView, setShowView] = useState(true);
+
+    const toggleView = () => {
+        setShowView(!showView);
+    };
 
 
     const openDetailModal = (foto) => {
@@ -242,60 +249,68 @@ const FotoList = () => {
 
         <div className="overflow-x-auto">
 
-            <div className="flex justify-end">
-                <button onClick={openModal} className="inline-flex items-center px-4 py-2 border shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 btn-ios-carica mb-4">
+            <div className="flex justify-end gap-2">
+                <button onClick={openModal} className="inline-flex items-center px-4 py-2 border shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700  btn-ios-carica mb-4">
                     Aggiungi Foto
+                </button>
+
+
+                <button onClick={toggleView} className="inline-flex items-center px-4 py-2 border shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 btn-ios-carica mb-4">
+                    {showView ? 'Mostra Messaggi' : 'Mostra Foto'}
                 </button>
             </div>
 
+            {showView ? (
+                <table className="min-w-full divide-y">
 
-            <table className="min-w-full divide-y">
-
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Foto</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Titolo</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descrizione</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Categoria</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Azioni</th>
-                    </tr>
-                </thead>
-
-                <tbody className=" divide-y divide-gray-300">
-
-                    {foto.map((foto, index) => (
-                        <tr key={index}>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <img onClick={() => openDetailModal(foto)} src={`${serverUrl}${foto.immagine}`} alt="Foto" className="h-10 w-10 rounded cursor-zoom-in" />
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.titolo}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.descrizione}</td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-sm">
-                                {foto.categorie?.map((categoria, index) => (
-                                    <span key={index} className="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-500 rounded-full">{categoria.nome}</span>
-                                ))}
-
-
-                            </td>
-
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <div className="btn-container">
-
-                                    <label className="switch">
-                                        <input type="checkbox" checked={foto.visibile} onChange={() => toggleVisibility(foto.id, foto.visibile)} />
-                                        <span className="slider round"></span>
-                                    </label>
-                                    <button onClick={() => openEditModal(foto)} className="btn-ios btn-modifica">
-                                        Modifica
-                                    </button>
-                                    <button onClick={() => deleteFoto(foto.id)} className="btn-ios btn-cancella">Cancella</button>
-                                </div>
-                            </td>
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Foto</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Titolo</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Descrizione</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Categoria</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Azioni</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody className=" divide-y divide-gray-300">
+
+                        {foto.map((foto, index) => (
+                            <tr key={index}>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <img onClick={() => openDetailModal(foto)} src={`${serverUrl}${foto.immagine}`} alt="Foto" className="h-10 w-10 rounded cursor-zoom-in" />
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.titolo}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm">{foto.descrizione}</td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                    {foto.categorie?.map((categoria, index) => (
+                                        <span key={index} className="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-gray-500 rounded-full">{categoria.nome}</span>
+                                    ))}
+
+
+                                </td>
+
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div className="btn-container">
+
+                                        <label className="switch">
+                                            <input type="checkbox" checked={foto.visibile} onChange={() => toggleVisibility(foto.id, foto.visibile)} />
+                                            <span className="slider round"></span>
+                                        </label>
+                                        <button onClick={() => openEditModal(foto)} className="btn-ios btn-modifica">
+                                            Modifica
+                                        </button>
+                                        <button onClick={() => deleteFoto(foto.id)} className="btn-ios btn-cancella">Cancella</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <ContacsList />
+            )}
 
 
             {isModalOpen && (

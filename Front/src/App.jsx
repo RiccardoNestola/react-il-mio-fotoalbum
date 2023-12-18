@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import { AuthProvider } from './Context/authContext';
 import Protected from './components/Auth/Protected';
+import Contacts from './pages/Contacts';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Homepage />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/registrati" element={<Register />}></Route>
+            <Route path="/contatti" element={<Contacts />}></Route>
             <Route path="/dashboard" element={
               <Protected>
                 <Dashboard />
