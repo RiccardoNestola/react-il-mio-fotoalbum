@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:3000/api/utenti/login', credentials);
             const userData = response.data;
             setUser(userData);
-            localStorage.setItem('token', userData.token);
+            /* localStorage.setItem('token', userData.token); */
             localStorage.setItem('user', JSON.stringify(userData));
         } catch (error) {
             console.error(error.response ? error.response.data : error.message);
@@ -22,8 +22,8 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:3000/api/utenti/registrazione', credentials);
             const userData = response.data;
-            setUser(userData);
-            localStorage.setItem('token', userData.token);
+            /*  setUser(userData); */
+            /*  localStorage.setItem('token', userData.token); */
             localStorage.setItem('user', JSON.stringify(userData));
         } catch (error) {
             if (error.response) {

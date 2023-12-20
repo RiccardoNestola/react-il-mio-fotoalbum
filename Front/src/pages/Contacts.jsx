@@ -79,9 +79,9 @@ const Contacts = () => {
 
                         {showBanner && (
                             <div className="p-2 w-full text-center">
-                                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                                    <strong class="font-bold">Ottimo! </strong>
-                                    <span class="block sm:inline">Messaggio inviato con successo</span>
+                                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                                    <strong className="font-bold">Ottimo! </strong>
+                                    <span className="block sm:inline">Messaggio inviato con successo</span>
                                 </div>
                             </div>
                         )}
